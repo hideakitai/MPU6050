@@ -7,7 +7,7 @@ This library is based on the [great work](https://github.com/kriswiner/MPU6050) 
 
 ### Simple Measurement
 
-```
+``` C++
 #include "MPU6050.h"
 
 MPU6050 mpu;
@@ -46,7 +46,7 @@ void loop()
 
 - device should be stay still during accel/gyro calibration
 
-```
+```  C++
 #include "MPU6050.h"
 
 MPU6050 mpu;
@@ -91,7 +91,7 @@ void loop()
 
 MPU6050 class is defined as follows.
 
-```C++
+``` C++
 template <
 	typename WireType,
 	AFS AFSSEL = AFS::A16G,
@@ -102,7 +102,7 @@ class MPU6050_;
 
 So, please use like
 
-```
+```  C++
 class MPU6050_<TwoWire, AFS::A4G, GFS::G500DPS> mpu; // most of Arduino
 class MPU6050_<i2c_t3, AFS::A4G, GFS::G500DPS> mpu; // Teensy
 ```
