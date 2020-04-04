@@ -27,9 +27,7 @@ class MPU6050_
     float beta = sqrt(3.0f / 4.0f) * GyroMeasError;  // compute beta
     float GyroMeasDrift = PI * (2.0f / 180.0f);      // gyroscope measurement drift in rad/s/s (start at 0.0 deg/s/s)
     float zeta = sqrt(3.0f / 4.0f) * GyroMeasDrift;  // compute zeta, the other free parameter in the Madgwick scheme usually set to a small or zero value
-    float deltat = 0.0f;                              // integration interval for both filter schemes
-    uint32_t lastUpdate = 0, firstUpdate = 0;         // used to calculate integration interval
-    uint32_t Now = 0;                                 // used to calculate integration interval
+    uint32_t lastUpdate = 0;         // used to calculate integration interval
 
     static constexpr uint8_t WHOAMI_DEFAULT_VALUE {0x68};
 
@@ -231,6 +229,11 @@ private:
         float _2q4 = 2.0f * q4;
         // float _2q1q3 = 2.0f * q1 * q3;
         // float _2q3q4 = 2.0f * q3 * q4;
+
+        // updateTime()
+        uint32_t Now = micros();
+        uint32_t deltat = ((Now - lastUpdate) / 1000000.0f); // set integration time by time elapsed since last filter update
+        lastUpdate = Now;
 
         // Normalise accelerometer measurement
         norm = sqrt(ax * ax + ay * ay + az * az);
